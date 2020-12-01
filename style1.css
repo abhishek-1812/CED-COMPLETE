@@ -1,0 +1,66 @@
+.forphoto{
+    background-image: url("nat.jpg");
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#btns{
+    background-color: tomato;
+}
+#cold{
+    color: tomato;
+}
+h1{
+    font-family: 'Space Grotesk', sans-serif;
+}
+h5{
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.5px;
+}
+.clr{
+    padding-top: 25px;
+    color: white;
+}
+.c1{
+    background-color: white;
+}
+.bol{
+    font-weight: bold;
+}
+.smll{
+    font-size: 13px;
+}
+.taxi{
+    background-color: tomato;
+    text-align: center;
+    border-radius: 10px;
+}
+#b1{
+    background-color: tomato;
+}
+#spn1, #spn2, #spn3, #spn4{
+    font-size: 8px;
+    width: 55px;
+}
+.s{
+    -webkit-appearance: none;
+}
+.form-control.a {
+    margin-right: 8px;
+}
+@media only screen and (max-width:768px){
+    .clr{
+        display: none;
+    }
+}
+#core{
+    background-color: tomato;
+}
+#ced{
+    font-weight: bold;
+    font-size: 30px;
+}
+.rs span{
+    color:tomato;
+}

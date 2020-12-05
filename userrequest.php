@@ -29,6 +29,7 @@ $output='';
     <title>Admin-Dashboard</title>
     <link rel="stylesheet" type="text/css" href="style3.css">
     <!-- <script src = "script.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
@@ -47,9 +48,6 @@ $output='';
                 <ul class="navbar-nav ml-auto text-right">
                     <li class="nav-item">
                         <a class="nav-link" href="admindash.php">BACK</a>
-                      </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">FEATURES</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="#">REVIEWS</a>
@@ -84,6 +82,27 @@ $output='';
                 </table>
             </div>
     </section>
+    <footer>
+  <div class="container-fluid">
+      <div class="row align-items-center pad">
+          <div class="col-lg-4 my-3 my-lg-0">
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+          <div class="col-lg-4 text-lg-center rs">
+              <p id="ced">CED-<span>CAB</span></p>
+              <p class="text-danger"><i class="fas fa-heart"></i>
+              Crafted lovingly in CEDCOSS.
+          </div>
+          <div class="col-lg-4 text-lg-right">
+              <a class="mr-3 text-muted" href="#!">Features</a>
+              <a class="mr-3 text-muted" href="#!">Reviews</a>
+              <a class="mr-3 text-muted" href="#!">Sign up</a>
+          </div>
+      </div>
+  </div>
+</footer>
 <script>
 
 $(document).ready(function(){
@@ -107,7 +126,7 @@ $(document).ready(function(){
         user_fatch_data();
     });
 </script>
-
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

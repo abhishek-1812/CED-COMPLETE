@@ -1,5 +1,5 @@
 .forphoto{
-    background-image: url("nat.jpg");
+    background-image: url("serv.jpg");
     height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
@@ -20,7 +20,7 @@ h5{
 }
 .clr{
     padding-top: 25px;
-    color: white;
+    color:white;
 }
 .c1{
     background-color: white;
@@ -54,13 +54,16 @@ h5{
         display: none;
     }
 }
-#core{
-    background-color: tomato;
-}
 #ced{
     font-weight: bold;
     font-size: 30px;
 }
 .rs span{
     color:tomato;
+}
+.colors{
+    background-color: white;
+}
+footer{
+    background-color: white;
 }

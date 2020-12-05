@@ -38,7 +38,7 @@ class Userclass
         VALUES ('".$username."','".$name."', NOW(), '".$password."','".$mobile."' ,'0', '0')";
             
         if ($data->query($sql) === true) {    
-            return 'New Record added succesfully';  
+            return 'Your Record added succesfully';  
         } else {
              return 'Error';
         }
@@ -46,7 +46,7 @@ class Userclass
             $data->close(); 
         
     }
-    public function login($username, $password,$data)
+    public function login($username, $password ,$data)
     {
         $sql= "SELECT * FROM user WHERE 
         `username`='$username' AND `password`='$password'"; 
@@ -58,15 +58,44 @@ class Userclass
                     $_SESSION['userdata']=array('username' => $row['username'],
                     'userid' => $row['userid'],'isadmin'=>$row['isadmin'],'isblock'=>$row['isblock']);
                     header('Location: admindash.php');
-                }  else if($row['isblock']==1) {
+
+                } elseif ($row['isblock']==1) {
                     $_SESSION['userdata']=array('username' => $row['username'],
                     'userid' => $row['userid'],'isadmin'=>$row['isadmin']);
-                    
+                   
+                    include_once 'userclass.php';
+
+                    $userob = new Userclass();
+
+                    if (!empty($_SESSION['ride'])) {
+
+                        $from = $_SESSION['ride']['from'];
+                        $to = $_SESSION['ride']['to'];
+                        $cabType = $_SESSION['ride']['cabType'];
+                        $weight = $_SESSION['ride']['weight'];
+                        $totalDistance = $_SESSION['ride']['dist'];
+                        $luggage = $_SESSION['ride']['luggage'];
+                        $fare = $_SESSION['ride']['totalfare'];
+                        $id = $_SESSION['userdata']['userid'];
+
+                        $msg = $userob->rideInsert($from, $to, $cabType, $weight, $totalDistance, $luggage, $fare, $id, $data);          
+                    }
                     header('Location: userdash.php');
-                }  
+                   
+                    // else {
+                    //     if (isset($_COOKIE['user'])) {
+                    //         setcookie('user', '');
+                    //     }
+                    //     if (isset($_COOKIE['pass'])) {
+                    //         setcookie("pass", "");
+                    //     }
+                    // }
+                } elseif ($row['isblock']==0) {
+                    header('Location: waituser.php');
+                } 
             }
         } else {
-            return 'Invalid User Detail';    
+            return 'Invalid Details';    
         }
         $data->close();
     }
@@ -76,7 +105,7 @@ class Userclass
         VALUES (NOW(),'".$from."','".$to."','".$cab."','".$totalDistance."','".$weight."', '".$fare."', '1','".$id."')";
 
         if ($data->query($sql) === true) {  
-            echo'<script>alert("Your Request has been Processed!")</script>';    
+            //echo'<script>alert("Your Request has been Processed!")</script>';   
         } else {
             return 'Error';
         }
@@ -498,6 +527,179 @@ class Userclass
         } else {
             return 0;
         }
+    }
+    public function edit_btn_app_location($id, $data)
+    {
+        $output;
+        $avail  = "SELECT `isavail` as num FROM `locationtbl` WHERE `lid`='$id'";
+        $result = $data->query($avail);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                //return $row['num'];
+                if ($row['num']==0) {
+                    $sql = "UPDATE `locationtbl` SET `isavail` = 1 WHERE `lid`='$id' ";
+                    if ($data->query($sql)==true) {
+                        $output  = "AVAILABLE";
+                    } else {
+                        $output  = "Error updating record:" . $data->error;
+                    }
+                    return $output;
+
+                } elseif ($row['num']==1) {
+                    $sql = "UPDATE `locationtbl` SET `isavail` = 0 WHERE `lid`='$id' ";
+                    if ($data->query($sql)==true) {
+                        $output  = "UNAVAILABLE";
+                    } else {
+                        $output  = "Error updating record:" . $data->error;
+                    }
+                    return $output;
+                }
+            }
+        }
+    }
+    public function displayLocation($data)
+    {
+        $sql = "SELECT * FROM  `locationtbl` WHERE `isavail`=1";
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[$row['name']]=$row['distance'];
+            }
+            return $dat;
+        } else {
+            return 'No data Found';
+        }
+    }
+    public function sort_app_user($data, $ride_sort, $id)
+    {
+        $sql = "SELECT * FROM  user WHERE `isblock`=1  ORDER BY `$ride_sort` DESC" ;
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[]=$row;
+            }
+            return json_encode($dat);
+        } else {
+            return 0;
+        }
+    }
+    public function sort_pend_user($data, $ride_sort, $id)
+    {
+        $sql = "SELECT * FROM  user WHERE `isblock`=0  ORDER BY `$ride_sort` DESC" ;
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[]=$row;
+            }
+            return json_encode($dat);
+        } else {
+            return 0;
+        }
+    }
+    public function sort_comp_user($data, $ride_sort, $id)
+    {
+        $sql = "SELECT * FROM  ride WHERE `userid`='".$id."' AND `status`=2  ORDER BY `$ride_sort` DESC" ;
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[]=$row;
+            }
+            return json_encode($dat);
+        } else {
+            return 0;
+        }
+    }
+    public function sort_comp_rides($data, $ride_sort)
+    {
+        $sql = "SELECT * FROM  ride  ORDER BY `$ride_sort` DESC" ;
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[]=$row;
+            }
+            return json_encode($dat);
+        } else {
+            return 0;
+        }
+    }
+    public function sort_req($data, $ride_sort)
+    {
+        $sql = "SELECT * FROM  ride  ORDER BY `$ride_sort` DESC" ;
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[]=$row;
+            }
+            return json_encode($dat);
+        } else {
+            return 0;
+        }
+    }
+    public function sort_canc_ride($data, $ride_sort)
+    {
+        $sql = "SELECT * FROM  ride WHERE `status`=3 ORDER BY `$ride_sort` DESC" ;
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[]=$row;
+            }
+            return json_encode($dat);
+        } else {
+            return 0;
+        }
+    }
+    // filter ride
+    public function filter_ride($data, $ride_sort)
+    {
+        $sql = "SELECT * FROM  ride  WHERE ridedate >= DATE(NOW()) - INTERVAL '$ride_sort' DAY  ORDER BY `ridedate` DESC" ;
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[]=$row;
+            }
+            return json_encode($dat);
+        } else {
+            return 0;
+        }
+
+    }
+    //close filter ride 
+    public function filter_user_ride($data, $ride_filter, $id)
+    {
+        $sql = "SELECT * FROM  ride  WHERE `userid`='".$id."' AND  ridedate >= DATE(NOW()) - INTERVAL '$ride_filter' DAY  ORDER BY `ridedate` DESC" ;
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[]=$row;
+            }
+            return json_encode($dat);
+        } else {
+            return 0;
+        }
+    }
+    public function sort_pend_user_ride($data, $ride_sort, $id)
+    {
+        $sql = "SELECT * FROM  ride WHERE `userid`='".$id."' AND `status`=1  ORDER BY `$ride_sort` DESC" ;
+        $result = $data->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $dat[]=$row;
+            }
+            return json_encode($dat);
+        } else {
+            return 0;
+        }
+    }
+    public function del_btn_for_pend_users($id, $data)
+    {
+        $sql = "DELETE FROM ride WHERE `rideid` = '$id'";
+
+        if ($data->query($sql) === true) {
+            $out = 1;
+        } else {
+            $out =  "Error deleting record: " . $data->error;
+        }
+        return $out;
     }
 }
 ?>

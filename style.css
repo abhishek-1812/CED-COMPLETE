@@ -61,3 +61,16 @@ div p:nth-child(4){
   font-size: 15px;
   font-style: italic;
 }
+#cold{
+  color: tomato;
+}
+#ced{
+  font-weight: bold;
+  font-size: 30px;
+}
+.rs span{
+  color:tomato;
+}
+footer{
+  background-color: white;
+}

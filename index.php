@@ -1,3 +1,38 @@
+<?php
+/**
+ * Short description for code
+ * php version 7.2.10
+ * 
+ * @category Category_Name
+ * @package  PackageName
+ * @author   Abhishek Singh <author@example.com>
+ * @license  http://www.php.net/license/3_01.txt 
+ * @link     http://pear.php.net/package/PackageName 
+ * 
+ * This is a "Docblock Comment," also known as a "docblock." 
+ */
+session_start();
+require 'config.php';
+require 'userclass.php';
+$obj = new Config();
+$data = $obj->connect();
+$userob = new Userclass();
+$msg  = $userob->displayLocation($data);
+
+
+if (!empty($_SESSION['ride'])) {
+      $from = $_SESSION['ride']['from'];
+      $to = $_SESSION['ride']['to'];
+      $cabType = $_SESSION['ride']['cabType'];
+      $weight = $_SESSION['ride']['weight'];
+      $totalDistance = $_SESSION['ride']['dist'];
+      $luggage = $_SESSION['ride']['luggage'];
+      $fare = $_SESSION['ride']['totalfare'];
+
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +44,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Abel&family=Poiret+One&family=Tajawal:wght@200&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">   
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> 
 </head>
 <body>
   <header>
@@ -22,17 +58,29 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse ml-auto" id="navbaritem">
+                <?php
+                if (empty($_SESSION['userdata'])) {
+                ?>                   
                 <ul class="navbar-nav ml-auto text-right">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">FEATURES</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">REVIEWS</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="btn btn-custom-lg" id="btns" href="login.php">LOG IN</a>
-                      </li>
+                      <a class="btn btn-custom-lg" id="btns" href="login.php?key=1">LOG IN</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="btn btn-custom-lg ml-1" id="btns" href="register.php">SIGN UP</a>
+                    </li>
                 </ul>
+                <?php
+                } else {?>
+                    <ul class="navbar-nav ml-auto text-right">
+                        <li class="nav-item">
+                        <a class="btn btn-custom-lg" id="btns" href="logout.php">LOG OUT</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="btn btn-custom-lg ml-1" id="btns" href="userdash.php">DASHBOARD</a>
+                        </li>
+                     </ul>
+                <?php }
+                ?>
             </div>      
         </nav>
     </div>
@@ -56,30 +104,32 @@
                                   <span class="input-group-text" id="spn1">PICK UP</span>
                                 </div>
                                 <select class="form-control mr-sm-2 s" id="pickup">
-                                    <option selected value="Choose">Choose</option>
-                                    <option value="Charbagh">Charbagh</option>
-                                    <option value="Indira Nagar">Indira Nagar</option>
-                                    <option value="Barabanki">Barabanki </option>
-                                    <option value="Faizabad">Faizabad </option>
-                                    <option value="BBD">BBD</option>
-                                    <option value="Basti">Basti</option>
-                                    <option value="Gorakhpur">Gorakhpur</option>
-                                  </select>
+                                   
+                                <?php
+                                foreach ($msg as $key=>$val) {         
+                                ?>
+                                <option selected value="<?php echo $key;?>"><?php echo $key;?></option>                                  
+                                    <?php
+                                }
+                                    ?>
+                                     <option selected value="Choose">Choose</option>
+                                </select>
                               </div>
                               <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                   <span class="input-group-text" id="spn2">DROP</span>
                                 </div>
                                 <select class="form-control mr-sm-2 s" id="drop">
+                                    
+                                <?php
+                                foreach ($msg as $key=>$val) {       
+                                ?>
+                                    <option selected value="<?php echo $key;?>"><?php echo $key;?></option>                                 
+                                    <?php
+                                }
+                                    ?>
                                     <option selected value="Choose">Choose</option>
-                                    <option value="Charbagh">Charbagh</option>
-                                    <option value="Indira Nagar">Indira Nagar</option>
-                                    <option value="Barabanki">Barabanki </option>
-                                    <option value="Faizabad">Faizabad </option>
-                                    <option value="BBD">BBD </option>
-                                    <option value="Basti">Basti</option>
-                                    <option value="Gorakhpur">Gorakhpur</option>
-                                  </select>
+                                </select>
                               </div>
                               <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
@@ -97,16 +147,54 @@
                                 <div class="input-group-prepend">
                                   <span class="input-group-text" id="spn4">LUGGAGE</span>
                                 </div>
-                                <input type="number" class="form-control a" placeholder="Enter Weight in KG" id="lug">
+                                <input type="text" class="form-control a" placeholder="Enter Weight in KG" id="lug">
                               </div>
                             <div class="form-group mb-2">
-                                <input class="btn btn-xl btn-block" id="b1" type="button" value="CALCULATE FARE">
+                                <input class="btn btn-xl btn-block" id="b1" type="button" data-toggle="modal" data-target="#exampleModal" value="CALCULATE FARE">
                             </div>
-                            <p class="pr-2 pl-2 mt-3" id="core"></p>
-                            <a href="userdash.php" class="btn btn-success bn mb-2" type="submit">BOOK NOW</a>
+                            <!-- 
+                            <a href="userdash.php" class="btn btn-success bn mb-2" id="box" type="submit">BOOK NOW</a> -->
                         </div>
-                        <div class="col-md-4 col-sm-12" >
+                        <!-- Modal -->
+                        
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">TOTAL AMOUNT</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <p class="text-center" id="core"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
+                                <a href="userdash.php" ><button type="button" class="btn btn-success">BOOK NOW</button></a>
+                            </div>
+                            </div>
                         </div>
+                        </div>
+                        <?php
+                        if (!empty($_SESSION['ride'])) {
+                        ?>
+                        <div class="col-md-4 col-sm-12 c1 ml-3" id="invoice" >
+                            <table class="table table-striped">
+                                <tr>
+                                <tr><th>FROM</th><td><?php echo $from;?></td></tr>
+                                <tr><th>TO</th><td><?php echo $to;?></td></tr>
+                                <tr><th>CAB-TYPE</th><td><?php echo $cabType;?></td></tr>
+                                <tr><th>DISTANCE</th><td><?php echo $totalDistance;?></td></tr>
+                                <tr><th>LUGGAGE (in kg)</th><td><?php echo $luggage;?></td></tr>
+                                <tr><th>FARE</th><td><?php echo $fare;?></td></tr>
+                                <tr><td><a href="userdash.php"><button type="button" class="btn btn-success">BOOK NOW</button></a></td><td><a href="cancelsess.php"><button type="button" id="cancel" class="btn btn-danger">CANCEL</button></a></td></tr>
+                                </tr>
+                            </table>
+                        </div>                        
+                        <?php
+                        }
+                        ?>
                         <div class="col-md-4 col-sm-12">
                         </div>
                     </div>
@@ -119,14 +207,14 @@
   <div class="container">
       <div class="row align-items-center pad">
           <div class="col-lg-4 my-3 my-lg-0">
-              <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-              <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-              <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-instagram"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-instagram"></i></a>
           </div>
           <div class="col-lg-4 text-lg-center rs">
               <p id="ced">CED-<span>CAB</span></p>
               <p class="text-danger"><i class="fas fa-heart"></i>
-              Crafted lovingly with Pagecloud.
+              Crafted lovingly in CEDCOSS
           </div>
           <div class="col-lg-4 text-lg-right">
               <a class="mr-3 text-muted" href="#!">Features</a>
@@ -135,7 +223,23 @@
           </div>
       </div>
   </div>
-</footer>    
+</footer>
+<script>
+$(document).ready(function(){
+  $('#cancel').click(function(){
+    $('#invoice').hide();
+  });
+    
+    $("#lug").keypress(function(event) {
+    var character = String.fromCharCode(event.keyCode);
+    return isValid(character);     
+});
+
+    function isValid(str) {
+        return !/[~`!@.a-zA-Z#$%\^&*()+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+    }
+});
+</script>    
     <script src="https://code.jquery.com/jquery-3.5.1.js"
     integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
     crossorigin="anonymous"></script>

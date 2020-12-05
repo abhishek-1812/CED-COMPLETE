@@ -24,13 +24,19 @@ if (empty($_SESSION['userdata'])) {
     header('Location: login.php');
 } else {
     echo '<h1><center>Welcome Admin !!</center></h1>
-    <center>'.$_SESSION['userdata']['username'].'<center>';
+    <center><center>';
 
     $obj = new Userclass();
     $msg = $obj->count_all_rides($data);
     $msg1 = $obj->count_all_users($data);
     $msg2 = $obj->count_all_locations($data);
     $earning = $obj->totalEarning($data);
+
+    if (isset($_SESSION['LAST_ACTIVITY']) && time() - $_SESSION['LAST_ACTIVITY'] > 260) {
+        session_unset();
+        session_destroy();
+    }
+    $_SESSION['LAST_ACTIVITY'] = time();
 }    
 
 ?>
@@ -41,6 +47,7 @@ if (empty($_SESSION['userdata'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin-Dashboard</title>
     <link rel="stylesheet" type="text/css" href="style3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body class="id">
@@ -55,12 +62,6 @@ if (empty($_SESSION['userdata'])) {
             </button>
             <div class="collapse navbar-collapse ml-auto" id="navbaritem">
                 <ul class="navbar-nav ml-auto text-right">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">FEATURES</a>
-                      </li>
-                      <li class="nav-item ">
-                        <a class="nav-link" href="#">REVIEWS</a>
-                      </li>
                       <li class="nav-item ">
                         <a class="btn btn-custom-lg" id="btns" href="logout.php">LOG OUT</a>
                       </li>
@@ -183,6 +184,28 @@ if (empty($_SESSION['userdata'])) {
 </div>
 </div>
 </section>
+<footer>
+  <div class="container-fluid">
+      <div class="row align-items-center pad">
+          <div class="col-lg-4 my-3 my-lg-0">
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+          <div class="col-lg-4 text-lg-center rs">
+              <p id="ced">CED-<span>CAB</span></p>
+              <p class="text-danger"><i class="fas fa-heart"></i>
+              Crafted lovingly in CEDCOSS.
+          </div>
+          <div class="col-lg-4 text-lg-right">
+              <a class="mr-3 text-muted" href="#!">Features</a>
+              <a class="mr-3 text-muted" href="#!">Reviews</a>
+              <a class="mr-3 text-muted" href="#!">Sign up</a>
+          </div>
+      </div>
+  </div>
+</footer>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $('.bn').hide();
+    //$('.bn').hide();
     var pick="Choose";
     var drop_point="Choose";
     var cabType="Choose";
@@ -18,7 +18,9 @@ $(document).ready(function(){
         cabType = $(this).val();
   
         if(cabType == 'CedMicro'){
+            $("#lug").val(' ');
             $("#lug").prop('disabled', true); 
+            //alert("luggage is not allowed");
         } else {
             $("#lug").prop('disabled', false); 
         }
@@ -27,19 +29,19 @@ $(document).ready(function(){
         //$('.bn').show();
         if (pick=="Choose"){
             alert("Please Enter Pickup Point");
-            return;
+            return false;
         }
         if (drop_point=="Choose"){
             alert("Please Enter Drop Point");
-            return;
+            return false;
         }
         if (cabType=="Choose"){
             alert("Please Select Cab");
-            return;
+            return false;
         }
         if (pick==drop_point){
             alert("Please Select Different Locations");
-            return;
+            return false;
         }
         lugRate = $('#lug').val();
 
@@ -56,7 +58,7 @@ $(document).ready(function(){
               alert("Error");
             }
         });
-       $('.bn').show();
+       //$('.bn').show();
       });
       $(".ed").click(function(){
         eddata = $(this).data('eid');

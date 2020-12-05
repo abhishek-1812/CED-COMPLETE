@@ -16,7 +16,8 @@ require 'config.php';
 require 'userclass.php';
 $obj = new Config();
 $data = $obj->connect();
-
+$userob = new Userclass();
+//$errors = array();
 $id = $_SESSION['userdata']['userid'];
 $obje = new Userclass();
 $msg = $obje->count_all_user_rides($data, $id);
@@ -24,32 +25,24 @@ $msg1 = $obje->count_all_at_comp_ride($data, $id);
 $msg2 = $obje->count_all_pend_rides($data, $id);
 
 if (empty($_SESSION['userdata'])) { 
+
     header('Location: login.php');
 } else {
-    echo '<h1><center>Welcome Dear Customer !!</center></h1>
-    <center>'.$_SESSION['userdata']['username'].'<center>';
+    echo '<h1><center>Welcome</center></h1>
+        <center>'.$_SESSION['userdata']['username'].'<center>';
 
-    if (!empty($_SESSION['ride'])) {
-        $from = $_SESSION['ride']['from'];
-        $to = $_SESSION['ride']['to'];
-        $cabType = $_SESSION['ride']['cabType'];
-        $weight = $_SESSION['ride']['weight'];
-        $totalDistance = $_SESSION['ride']['dist'];
-        $luggage = $_SESSION['ride']['luggage'];
-        $fare = $_SESSION['ride']['totalfare'];
-        $id = $_SESSION['userdata']['userid'];
+    if (isset($_SESSION['ride'])) {
+               
+        echo '<script>alert("Your Booking is in Process!")</script>';
 
-        //print_r($_SESSION['ride']);
-        $userob = new Userclass();
-        if (isset($_SESSION['ride'])) {
-            $msg = $userob->rideInsert($from, $to, $cabType, $weight, $totalDistance, $luggage, $fare, $id, $data);
-            echo $msg;
-            unset($_SESSION['ride']);
-        }
-
+        unset($_SESSION['ride']);
     }
-
-
+    if (isset($_SESSION['LAST_ACTIVITY']) && time() - $_SESSION['LAST_ACTIVITY'] > 260) {
+        session_unset();
+        session_destroy();
+    }
+    $_SESSION['LAST_ACTIVITY'] = time();
+    
 }   
 
 ?>
@@ -60,6 +53,7 @@ if (empty($_SESSION['userdata'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer-Dashboard</title>
     <link rel="stylesheet" type="text/css" href="style3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -137,7 +131,7 @@ if (empty($_SESSION['userdata'])) {
                 <div class="card">
                 <div class="card-body bg-danger">
                     <h5 class="card-title">YOUR TOTAL RIDES</h5>
-                    <p class="card-text"><?php echo $msg; ?></p>
+                    <p class="card-text bg-light"><?php echo $msg; ?></p>
                     <a href="userallrides.php" class="btn btn-primary">CHECK MORE</a>
                 </div>
                 </div>
@@ -146,7 +140,7 @@ if (empty($_SESSION['userdata'])) {
                 <div class="card">
                 <div class="card-body bg-success">
                     <h5 class="card-title">YOU COMPLETE RIDES</h5>
-                    <p class="card-text"><?php echo $msg1; ?></p>
+                    <p class="card-text bg-light"><?php echo $msg1; ?></p>
                     <a href="usercompleteride.php" class="btn btn-primary">CHECK MORE</a>
                 </div>
                 </div>
@@ -155,7 +149,7 @@ if (empty($_SESSION['userdata'])) {
                 <div class="card">
                 <div class="card-body bg-warning">
                     <h5 class="card-title">YOUR PENDING RIDES</h5>
-                    <p class="card-text"><?php echo $msg2; ?></p>
+                    <p class="card-text bg-light"><?php echo $msg2; ?></p>
                     <a href="userpendingride.php" class="btn btn-primary">CHECK MORE</a>
                 </div>
                 </div>
@@ -163,6 +157,28 @@ if (empty($_SESSION['userdata'])) {
             </div>
         </div>
     </section>
+    <footer>
+  <div class="container-fluid">
+      <div class="row align-items-center pad">
+          <div class="col-lg-4 my-3 my-lg-0">
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+          <div class="col-lg-4 text-lg-center rs">
+              <p id="ced">CED-<span>CAB</span></p>
+              <p class="text-danger"><i class="fas fa-heart"></i>
+              Crafted lovingly in CEDCOSS.
+          </div>
+          <div class="col-lg-4 text-lg-right">
+              <a class="mr-3 text-muted" href="#!">Features</a>
+              <a class="mr-3 text-muted" href="#!">Reviews</a>
+              <a class="mr-3 text-muted" href="#!">Sign up</a>
+          </div>
+      </div>
+  </div>
+</footer>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

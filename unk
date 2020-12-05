@@ -1,0 +1,10 @@
+ <?php echo $msg;?>
+            <div id="error">
+                <?php if (sizeof($errors)>0) :?>
+                    <ul>
+                    <?php foreach ($errors as $error):?>
+                        <li><?php echo $errors['msg'];break?></li>
+                    <?php endforeach;?>
+                    </ul>
+                <?php endif;?>
+            </div>

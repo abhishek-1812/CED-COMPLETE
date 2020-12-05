@@ -1,5 +1,5 @@
 body{
-    background-color: peachpuff !important;
+    background-color: #f3d8e5 !important;
 }
 .wrapper {
     display: flex;
@@ -26,8 +26,8 @@ a, a:hover, a:focus {
 }
 
 #sidebar {
-    background:papayawhip !important;
-    height: 120vh;
+    background:#addfc6 !important;
+    height: 110vh;
     color: black;
     transition: all 0.3s;
     
@@ -65,4 +65,20 @@ ul ul a {
 .sort{
     margin-left: 120px;
     margin-top: 5px;
+}
+#cold{
+    color: tomato;
+}
+#ced{
+    font-weight: bold;
+    font-size: 30px;
+}
+.rs span{
+    color:tomato;
+}
+#foot{
+    margin-top: 260px;
+}
+footer{
+    background-color: white;
 }

@@ -18,3 +18,16 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
   }
+  #cold{
+    color: tomato;
+}
+#ced{
+    font-weight: bold;
+    font-size: 30px;
+}
+.rs span{
+    color:tomato;
+}
+footer{
+    background-color: white;
+}

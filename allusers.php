@@ -28,36 +28,63 @@ $msg = $allobjects->allusers($data);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin-Dashboard</title>
     <link rel="stylesheet" type="text/css" href="style3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body class="id">
     <header>
     <div class="container-fluid">
-        <nav class="navbar navbar-light bg-light navbar-expand-lg ">
-            <div class="navbar-header">
-                <a id="a1" href="#" class="navbar-brand">CED-<span id="cold">CAB</span></a>
-            </div>
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbaritem"> 
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse ml-auto" id="navbaritem">
-                <ul class="navbar-nav ml-auto text-right">
-                    <li class="nav-item">
-                        <a class="nav-link" href="admindash.php">BACK</a>
-                      </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">FEATURES</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">REVIEWS</a>
-                      </li>
-
-                      <li class="nav-item">
-                        <a class="btn btn-custom-lg" id="btns" href="logout.php">LOG OUT</a>
-                      </li>
-                </ul>
-            </div>      
-        </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">CED-<span id="cold">CAB</span></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="admindash.php">HOME<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          LOCATION
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="location.php">Add Location</a>
+          <a class="dropdown-item" href="locationlist.php">Location List</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          USERS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="pendinguser.php">Pending Users</a>
+          <a class="dropdown-item" href="approveduser.php">Approved Users</a>
+          <a class="dropdown-item" href="allusers.php">All Users</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          RIDES
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="requestride.php">Pending Rides</a>
+          <a class="dropdown-item" href="completedride.php">Completed Rides</a>
+          <a class="dropdown-item" href="cancelride.php">Cancelled Rides</a>
+          <a class="dropdown-item" href="allride.php">All Rides</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ACCOUNT
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="changepassword.php">Change Password</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
     </div>
     </header>
     <section>
@@ -88,6 +115,28 @@ $msg = $allobjects->allusers($data);
 </table>
     </div>
 </section>
+<footer>
+  <div class="container-fluid">
+      <div class="row align-items-center pad">
+          <div class="col-lg-4 my-3 my-lg-0">
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+          <div class="col-lg-4 text-lg-center rs">
+              <p id="ced">CED-<span>CAB</span></p>
+              <p class="text-danger"><i class="fas fa-heart"></i>
+              Crafted lovingly in CEDCOSS.
+          </div>
+          <div class="col-lg-4 text-lg-right">
+              <a class="mr-3 text-muted" href="#!">Features</a>
+              <a class="mr-3 text-muted" href="#!">Reviews</a>
+              <a class="mr-3 text-muted" href="#!">Sign up</a>
+          </div>
+      </div>
+  </div>
+</footer>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

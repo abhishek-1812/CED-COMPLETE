@@ -118,5 +118,66 @@ case 'invoice_ride':
     $output = $userobjects->invoice_ride($id, $data);
     echo $output;
     break;
+case 'edit_btn_for_location':
+    $id = $_POST['id'];
+    $output = $userobjects->edit_btn_app_location($id, $data);
+    print_r($output);
+    break;
+case 'sort_approved_user';
+    $ride_sort = $_POST['ride'];
+    $id = $_POST['id'];
+    $output = $userobjects->sort_app_user($data, $ride_sort, $id);
+    print_r($output);
+    break;
+case 'sort_pending_user':
+    $ride_sort = $_POST['ride'];
+    $id = $_POST['id'];
+    $output = $userobjects->sort_pend_user($data, $ride_sort, $id);
+    print_r($output);
+    break;
+case 'sort_comp_user':
+    $ride_sort = $_POST['ride'];
+    $id = $_POST['id'];
+    $output = $userobjects->sort_comp_user($data, $ride_sort, $id);
+    print_r($output);
+    break;
+case 'sort_comp_rides':
+    $ride_sort = $_POST['ride'];    
+    $output = $userobjects->sort_ride($data, $ride_sort);
+    print_r($output);
+    break;
+case 'sort_req_ride':
+    $ride_sort = $_POST['ride'];    
+    $output = $userobjects->sort_req($data, $ride_sort);
+    print_r($output);
+    break;
+case 'sort_canc_ride':
+    $ride_sort = $_POST['ride'];    
+    $output = $userobjects->sort_canc_ride($data, $ride_sort);
+    print_r($output);
+    break;
+//filter all rides 
+case 'filter_ride':
+    $ride_sort = $_POST['ride'];    
+    $output = $userobjects->filter_ride($data, $ride_sort);
+    print_r($output);
+    break;
+case 'filter_user_ride':
+    $ride_filter = $_POST['ride'];
+    $id = $_POST['id'];
+    $output = $userobjects->filter_user_ride($data, $ride_filter, $id);
+    print_r($output);
+    break;
+case 'sort_pend_ride':
+    $ride_sort = $_POST['ride'];
+    $id = $_POST['id'];
+    $output = $userobjects->sort_pend_user_ride($data, $ride_sort, $id);
+    print_r($output);
+    break;
+case 'del_btn_for_pend_users':
+    $id = $_POST['id'];
+    $output = $userobjects->del_btn_for_pend_users($id, $data);
+    echo $output;
+    break;
 }
 ?>

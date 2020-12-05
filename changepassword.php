@@ -37,46 +37,75 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rancho&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
-    <div class="container-fluid mt-2">
-        <nav class="navbar navbar-light bg-light navbar-expand-lg ">
-            <div class="navbar-header">
-                <a id="a1" href="#" class="navbar-brand">CED-<span id="cold">CAB</span></a>
-            </div>
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbaritem"> 
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse ml-auto" id="navbaritem">
-                <ul class="navbar-nav ml-auto text-right">
-                    <li class="nav-item">
-                        <a class="nav-link" href="admindash.php">BACK</a>
-                      </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">FEATURES</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">REVIEWS</a>
-                      </li>
-
-                      <li class="nav-item">
-                        <a class="btn btn-custom-lg" id="btns" href="logout.php">LOG OUT</a>
-                      </li>
-                </ul>
-            </div>      
-        </nav>
-        <h3 class="text-center mt-3">UPDATE PASSWORD</h3>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">CED-<span id="cold">CAB</span></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="admindash.php">HOME<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          LOCATION
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="location.php">Add Location</a>
+          <a class="dropdown-item" href="locationlist.php">Location List</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          USERS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="pendinguser.php">Pending Users</a>
+          <a class="dropdown-item" href="approveduser.php">Approved Users</a>
+          <a class="dropdown-item" href="allusers.php">All Users</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          RIDES
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="requestride.php">Pending Rides</a>
+          <a class="dropdown-item" href="completedride.php">Completed Rides</a>
+          <a class="dropdown-item" href="cancelride.php">Cancelled Rides</a>
+          <a class="dropdown-item" href="allride.php">All Rides</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ACCOUNT
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="changepassword.php">Change Password</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
     </div>
+    <h2>CHANGE PASSWORD</h2>
     </header>
     <section>    
+    
         <div class="container mt-3" id="wrapper">
             <?php echo $msg;?>
             <div id="login-form">
                 <form action="changepassword.php" method="POST">
                 <p>
-                    <input type="text" name="name" placeholder="Username" required>
+                    <input type="text" id="pass" name="name" placeholder="Username" required>
                 </p>
                 <p>
                     <input type="password" name="password" placeholder="Password" required>
@@ -88,6 +117,38 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
     </section>
+    <!-- <footer>
+  <div class="container-fluid">
+      <div class="row align-items-center pad">
+          <div class="col-lg-4 my-3 my-lg-0">
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+          <div class="col-lg-4 text-lg-center rs">
+              <p id="ced">CED-<span>CAB</span></p>
+              <p class="text-danger"><i class="fas fa-heart"></i>
+              Crafted lovingly with Pagecloud.
+          </div>
+          <div class="col-lg-4 text-lg-right">
+              <a class="mr-3 text-muted" href="#!">Features</a>
+              <a class="mr-3 text-muted" href="#!">Reviews</a>
+              <a class="mr-3 text-muted" href="#!">Sign up</a>
+          </div>
+      </div>
+  </div>
+</footer> -->
+    <script>
+        $("#pass").keypress(function(event) {
+        var character = String.fromCharCode(event.keyCode);
+        return isValid(character);     
+        });
+
+        function isValid(str) {
+            return !/[~`.!@#$%\^&*()+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);
+        }
+    </script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

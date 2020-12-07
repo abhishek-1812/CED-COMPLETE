@@ -2,6 +2,7 @@ body {
     /* margin: 0;
     padding: 0; */
     font-family: sans-serif;
+  
 }
 
 .box {
@@ -58,11 +59,27 @@ body {
     background: #2ecc71
 }
 .clss{
-    background-color: pink !important;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(93,149,218,0.8925770137156425) 100%, rgba(0,212,255,1) 100%) !important;
 }
 #cold{
     color: tomato;
 }
 .rs span{
     color:tomato;
+}
+.btns1{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+    text-decoration: none !important;
 }

@@ -82,13 +82,14 @@ if (isset($_POST['submit'])) {
                     <input type="text" name="username" placeholder="Username" required> 
                     <input type="password" name="password" placeholder="Password" required> 
                     <input type="submit" class="btn" name="submit" value="Login">
-                    <p>
-                        Don't have account?
-                    </p>
-                    <p>
-                        <a href= "register.php"><input type="submit" class="btn" name="submit" value="SIGN UP"></a>
-                    </p>
+                   
                 </form>
+                <p>
+                    Don't have account?
+                </p>
+                <p>
+                    <a href= "register.php"><input type="submit" class="btns1" value="SIGN UP"></a>
+                </p>
             </div>
         </div>
     </div>

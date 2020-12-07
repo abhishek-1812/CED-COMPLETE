@@ -10,7 +10,8 @@ $msg = '';
 
 if (isset($_POST['submit'])) {
     $username = isset($_POST['username'])?$_POST['username']:'';
-    $name = isset($_POST['name'])?$_POST['name']:'';
+    $name = trim(isset($_POST['name'])?$_POST['name']:'');
+    $name = preg_replace("/\s+/", " ", $name);
     $password = md5(isset($_POST['password'])?$_POST['password']:'');
     $repassword = md5(isset($_POST['repassword'])?$_POST['repassword']:'');
     $mobile = isset($_POST['mobile'])?$_POST['mobile']:'';
@@ -83,13 +84,14 @@ if (isset($_POST['submit'])) {
                     <input type="password" name="repassword" placeholder="Re-Password" required>
                     <input type="text" id="mob" name="mobile" placeholder="Mobile" required>
                     <input class="btn1" type="submit" name="submit" value="Submit"> 
-                    <p>
-                    Already have an account!
-                    </p>
-                    <p>
-                        <a href= "login.php"><input class="btn1" type="submit" value="Log In"> </a> 
-                    </p>              
+                            
                 </form>
+                <p>
+                    Already have an account!
+                </p>
+                <p>
+                    <a href= "login.php"><input type="submit" class="btns1" value="Log In"> </a> 
+                </p>     
             </div>
         </div>
     </div>
